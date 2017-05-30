@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div style="width:980px;margin:0 auto" class="section" id="literally-canvas">
+    <h1>Collaborative White Board</h1>
+
+    <div style="display:none" id="myscreenshot">
+        @ViewBag.myscreenshot
+
+    </div>
+    <div class="container">
+        <div class="row">
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="inputKey" class="col-md-1 control-label">Generate</label>
+                            <div class="col-md-2">
+                                <input type="button" class="btn-primary form-control" id="btnCrate" value="Share with Friends" />
+                            </div>
+                            <label for="inputValue" class="col-md-1 control-label">URL</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" value="" id="linkURL" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div id="myControl" class="my-drawing"></div>
+        </div>
+    </div>
+</div>
