@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WhiteBoardApplication.Models;
 
 namespace WhiteBoardApplication.Controllers
 {
@@ -23,72 +24,39 @@ namespace WhiteBoardApplication.Controllers
         }
 
         [HttpPost]
-        public JsonResult AjaxMethod(string myscreenshot)
+        [MyErrorHandler]
+        public JsonResult saveScreenShot(string myscreenshot) 
         {
-
-            string sURLString = GenerateRandomString();
-            HttpRequestBase  request = this.Request;
-            string URL = request.Url.Scheme + "://" + request.Url.Authority + VirtualPathUtility.ToAbsolute("~/") + "?id=" + sURLString;
-            
-            LinkInformation link = new LinkInformation
-            {
-                LinkID = sURLString,
-                LinkContent = myscreenshot
-            };
+            string URL = string.Empty;
             using (var ctx = new ColWhiteBoardContext())
             {
                 try
                 {
-                    var linkInfoInDb = ctx.LinkInformations
-                  .Where(c => c.LinkID == URL) // or whatever your key is
-                  .SingleOrDefault();
-                    if (linkInfoInDb == null)
-                        ctx.LinkInformations.Add(link);
+                    string sURLString = Utility.GenerateRandomString();
+                    HttpRequestBase request = this.Request;
+                    URL = request.Url.Scheme + "://" + request.Url.Authority + VirtualPathUtility.ToAbsolute("~/") + "?id=" + sURLString;
 
+                    LinkInformation link = new LinkInformation
+                    {
+                        LinkID = sURLString,
+                        LinkContent = myscreenshot
+                    };
+                    ctx.LinkInformations.Add(link);
                     ctx.SaveChanges();
 
                 }
                 catch (Exception Ex)
                 {
-
-                    throw;
+                    ErrorLog errObj = new ErrorLog();
+                    errObj.ErrorMessage =  Ex.Message;
+                    ctx.ErrorLogs.Add(errObj);
+                    ctx.SaveChanges();
+                    ErrorLogger.WriteLogError(Ex.Message);
+                    throw new Exception("Message: "+Ex.Message);
                 }
 
             }
-
-            return Json(URL);
+            return Json(new { success = true, urlString = URL });   
         }
-
-      
-        public string GenerateRandomString() {
-            string URL = "";
-            List<int> numbers = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-            List<char> characters = new List<char>() { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_' };
-
-            // Create one instance of the Random  
-            Random rand = new Random();
-            // run the loop till I get a string of 10 characters  
-            for (int i = 0; i < 11; i++)
-            {
-                // Get random numbers, to get either a character or a number...  
-                int random = rand.Next(0, 3);
-                if (random == 1)
-                {
-                    // use a number  
-                    random = rand.Next(0, numbers.Count);
-                    URL += numbers[random].ToString();
-                }
-                else
-                {
-                    // Use a character  
-                    random = rand.Next(0, characters.Count);
-                    URL += characters[random].ToString();
-                }
-            }
-
-            return URL;
-        }
-
-      
     }
 }

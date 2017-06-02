@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WhiteBoardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WhiteBoardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ErrorMessage" Type="nvarchar" MaxLength="250" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="LinkInformation">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,10 +22,10 @@
           <Property Name="LinkContent" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="WhiteBoardModelStoreContainer">
+          <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LinkInformation" EntityType="Self.LinkInformation" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WhiteBoardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -31,7 +39,16 @@
         </EntityType>
         <EntityContainer Name="ColWhiteBoardContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="LinkInformations" EntityType="Self.LinkInformation" />
+          <EntitySet Name="ErrorLogs" EntityType="WhiteBoardModel.ErrorLog" />
         </EntityContainer>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -44,6 +61,15 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LinkID" ColumnName="LinkID" />
                 <ScalarProperty Name="LinkContent" ColumnName="LinkContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="WhiteBoardModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

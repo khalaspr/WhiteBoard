@@ -26,5 +26,6 @@ namespace WhiteBoardApplication
         }
     
         public virtual DbSet<LinkInformation> LinkInformations { get; set; }
+        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
     }
 }

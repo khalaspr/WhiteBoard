@@ -10,5 +10,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ErrorLogs">
+      <EntityTypeMapping TypeName="WhiteBoardModel.ErrorLog">
+        <MappingFragment StoreEntitySet="ErrorLog">
+          <ScalarProperty Name="Exception" ColumnName="Exception" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

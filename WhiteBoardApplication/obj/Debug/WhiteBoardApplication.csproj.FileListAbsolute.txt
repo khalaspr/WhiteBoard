@@ -52,3 +52,8 @@ C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplica
 C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\obj\Debug\WhiteBoardApplication.dll
 C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\obj\Debug\WhiteBoardApplication.pdb
+C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\xbbnd81\Desktop\Personal\MyWork\WhiteBoardApplication\WhiteBoardApplication\obj\Debug\WhiteBoardApplication.csprojResolveAssemblyReference.cache

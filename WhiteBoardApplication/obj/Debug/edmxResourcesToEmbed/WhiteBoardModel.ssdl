@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WhiteBoardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErrorMessage" Type="nvarchar" MaxLength="250" />
+    <Property Name="Exception" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="LinkInformation">
     <Key>
       <PropertyRef Name="Id" />
@@ -9,6 +17,7 @@
     <Property Name="LinkContent" Type="nvarchar(max)" />
   </EntityType>
   <EntityContainer Name="WhiteBoardModelStoreContainer">
+    <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LinkInformation" EntityType="Self.LinkInformation" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

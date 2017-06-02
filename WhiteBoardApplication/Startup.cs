@@ -8,6 +8,7 @@ namespace WhiteBoardApplication
     {
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
             ConfigureAuth(app);
         }
     }

@@ -1,0 +1,5 @@
+
+Log Entry : 
+06/02/2017 18:46:27
+Error in: http://localhost:58482/Home/saveScreenShot. Error Message:Attempted to divide by zero.
+__________________________

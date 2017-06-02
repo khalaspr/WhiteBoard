@@ -10,5 +10,14 @@
   </EntityType>
   <EntityContainer Name="ColWhiteBoardContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="LinkInformations" EntityType="Self.LinkInformation" />
+    <EntitySet Name="ErrorLogs" EntityType="WhiteBoardModel.ErrorLog" />
   </EntityContainer>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>
