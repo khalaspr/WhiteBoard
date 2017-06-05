@@ -13,6 +13,7 @@
     @Scripts.Render("~/bundles/LiterallycanvasJS")
 
     <script src="~/Scripts/app.js"></script>
+
 </head>
 <body>
    
@@ -33,11 +34,29 @@
             var chat = $.connection.chatHub;
             // Create a function that the hub can call to broadcast messages.
 
-            chat.client.broadcastMessage = function (name, myscreenshot) {
+            chat.client.broadcastMessage = function (name, myscreenshot,IsRealTime) {
                 $("#spanName").show();
-                $("#spanName").text('' + name + ' is typing...');
-                lc.loadSnapshot(JSON.parse(myscreenshot));
-                
+                $("#txtIsRealTime").val(IsRealTime);
+
+                if ($("#txtUserName").val() != name) {
+                    $('.my-drawing').mousedown(function (event) { event.preventDefault(); event.stopPropagation(); });
+                }
+
+                if (myscreenshot != '') {
+                    lc.loadSnapshot(JSON.parse(myscreenshot));
+                    if (IsRealTime == 1) {
+                       
+                        $("#spanName").text('' + name + ' is typing...');
+                        lc.loadSnapshot(JSON.parse(myscreenshot));
+                    }
+                    else {
+                        $("#spanName").text('' + name + ' has finished typing');
+                    }
+                }
+                else {
+                    $("#spanName").text('' + name + ' is typing...');
+                }
+
             };
             // Get the user name and store it to prepend to messages.
             var UserName =prompt('Enter your name:', '');
@@ -51,17 +70,43 @@
             $('#displayname').text("Welcome " + $("#txtUserName").val());
 
             lc.on('drawEnd', function () {
-                var myscreenshot = lc.getSnapshotJSON();
-                chat.server.send($("#txtUserName").val(), myscreenshot);
+                var IsRealTime = $("#txtIsRealTime").val();
+                if (IsRealTime == 1) {
+                     var myscreenshot = lc.getSnapshotJSON();
+                     chat.server.send($("#txtUserName").val(), myscreenshot, IsRealTime);
+                }
+                else {
+                    //var myscreenshot = lc.getSnapshotJSON();
+                    chat.server.send($("#txtUserName").val(), '', IsRealTime);
+                }
+               
             })
 
             $.connection.hub.start().done(function () {
-                $('#sendmessage').click(function () {
+                $('#btnSendScreenShot').click(function () {
                     var myscreenshot = lc.getSnapshotJSON();
-                   // var objScreenshot = { msg: '', myscreenshot: myscreenshot, IsWritingCompleted: true }
-                    chat.server.send($("#txtUserName").val(), myscreenshot);
+                    var IsRealTime = $("#txtIsRealTime").val();
+                    chat.server.send($("#txtUserName").val(), myscreenshot, IsRealTime);
                    
                 });
+            });
+
+
+
+
+            $('#btnRealTime').click(function () {
+                if ($(this).val() == "Real Time") {
+                    $(this).val("Write And Send");
+                    $("#txtIsRealTime").val(0);
+                    $("#btnSendScreenShot").show();
+                    $(this).addClass("realClass");
+                }
+                else {
+                    $("#txtIsRealTime").val(1);
+                    $(this).val("Real Time");
+                    $("#btnSendScreenShot").hide();
+                    $(this).addClass("normalClass");
+                };
             });
         });
 

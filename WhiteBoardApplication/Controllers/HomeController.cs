@@ -51,7 +51,7 @@ namespace WhiteBoardApplication.Controllers
                     errObj.ErrorMessage =  Ex.Message;
                     ctx.ErrorLogs.Add(errObj);
                     ctx.SaveChanges();
-                    ErrorLogger.WriteLogError(Ex.Message);
+                    Utility.WriteLogError(Ex.Message);
                     throw new Exception("Message: "+Ex.Message);
                 }
 
